@@ -167,19 +167,27 @@ Enter your choice:''');
       print('Enter Member ID of the member to delete: ');
       String memberId = stdin.readLineSync()!;
       libraryManager.deleteMember(memberId);
-    }else if (choice =='16'){
-     print('Enter name to search (leave empty if not searching by name): ');
-      String? name = stdin.readLineSync();
-      print('Enter Member ID to search (leave empty if not searching by ID): ');
-      String? memberId = stdin.readLineSync();
-      List<Member> members = libraryManager.searchMembers(
-        name: name,
-        memberId: memberId,
-      );
-      for (var member in members) {
-        print(
-            'Name: ${member.name}, Member ID: ${member.memberId}, Borrowed Books: ${member.borrowedBooks}');
-      }
+  } else if (choice == '16') {
+  print('Enter name to search (leave empty if not searching by name): ');
+  String? name = stdin.readLineSync();
+  
+  print('Enter Member ID to search (leave empty if not searching by ID): ');
+  String? memberId = stdin.readLineSync();
+  
+  List<Member> members = libraryManager.searchMembers(
+    name: name?.isEmpty ?? true ? null : name,
+    memberId: memberId?.isEmpty ?? true ? null : memberId,
+  );
+  
+  if (members.isNotEmpty) {
+    for (var member in members) {
+      print(
+          'Name: ${member.name}, Member ID: ${member.memberId}, Borrowed Books: ${member.borrowedBooks}');
+    }
+  } else {
+    print('No members found with the given search criteria.');
+  }
+
     
     } else if (choice == '17') {
       // Exit

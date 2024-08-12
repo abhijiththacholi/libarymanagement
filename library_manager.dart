@@ -162,15 +162,39 @@ class LibraryManager {
   // Save data to JSON files
   Future<void> saveData() async {
     try {
-      String booksJson = jsonEncode(books);
       String authorsJson = jsonEncode(authors);
       String membersJson = jsonEncode(members);
 
-      await File('Book.json').writeAsString(booksJson);
       await File('Author.json').writeAsString(authorsJson);
       await File('Member.json').writeAsString(membersJson);
     } catch (e) {
       print('Error saving data: $e');
+    }
+  }
+
+  Future<void> saveBook() async{
+    try {
+          String booksJson = jsonEncode(books);
+          await File('Book.json').writeAsString(booksJson);
+
+    } catch (e) {
+      print("Error saving book");
+    }
+  }
+  Future<void>saveAuthour() async{
+    try{
+      String authoursJson = jsonEncode(authors);
+      await File ('Authour.json').writeAsString(authoursJson);
+    }catch (e){
+      print("Error saving authour");
+    }
+  }
+  Future<void>saveMember() async{
+    try{
+      String membersJson =jsonEncode(members);
+      await File ('Members.Json').writeAsString(membersJson);
+    }catch (e){
+      print("Error saving Member");
     }
   }
 }

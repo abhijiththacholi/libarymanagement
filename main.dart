@@ -1,8 +1,7 @@
-
-
- import 'dart:io';
- import 'details.dart';
+import 'dart:io';
+import 'details.dart';
 import 'library_manager.dart';
+
 void main() async {
   LibraryManager libraryManager = LibraryManager();
 
@@ -44,6 +43,7 @@ Enter your choice:''');
       print('Enter ISBN: ');
       String isbn = stdin.readLineSync()!;
       libraryManager.addBook(Book(title, author, publicationYear, isbn));
+      await libraryManager.saveBook();
     } else if (choice == '2') {
       // View All Books
 
@@ -109,6 +109,7 @@ Enter your choice:''');
       print('Enter name: ');
       String name = stdin.readLineSync()!;
       libraryManager.addAuthor(Author(name, []));
+      await libraryManager.saveAuthour();
     } else if (choice == '9') {
       // View All Authors
 
@@ -145,6 +146,7 @@ Enter your choice:''');
       print('Enter Member ID: ');
       String memberId = stdin.readLineSync()!;
       libraryManager.addMember(Member(name, memberId, []));
+       await libraryManager.saveMember();
     } else if (choice == '13') {
       // View All Members
 
@@ -167,32 +169,30 @@ Enter your choice:''');
       print('Enter Member ID of the member to delete: ');
       String memberId = stdin.readLineSync()!;
       libraryManager.deleteMember(memberId);
-  } else if (choice == '16') {
-  print('Enter name to search (leave empty if not searching by name): ');
-  String? name = stdin.readLineSync();
-  
-  print('Enter Member ID to search (leave empty if not searching by ID): ');
-  String? memberId = stdin.readLineSync();
-  
-  List<Member> members = libraryManager.searchMembers(
-    name: name?.isEmpty ?? true ? null : name,
-    memberId: memberId?.isEmpty ?? true ? null : memberId,
-  );
-  
-  if (members.isNotEmpty) {
-    for (var member in members) {
-      print(
-          'Name: ${member.name}, Member ID: ${member.memberId}, Borrowed Books: ${member.borrowedBooks}');
-    }
-  } else {
-    print('No members found with the given search criteria.');
-  }
+    } else if (choice == '16') {
+      print('Enter name to search (leave empty if not searching by name): ');
+      String? name = stdin.readLineSync();
 
-    
+      print('Enter Member ID to search (leave empty if not searching by ID): ');
+      String? memberId = stdin.readLineSync();
+
+      List<Member> members = libraryManager.searchMembers(
+        name: name?.isEmpty ?? true ? null : name,
+        memberId: memberId?.isEmpty ?? true ? null : memberId,
+      );
+
+      if (members.isNotEmpty) {
+        for (var member in members) {
+          print(
+              'Name: ${member.name}, Member ID: ${member.memberId}, Borrowed Books: ${member.borrowedBooks}');
+        }
+      } else {
+        print('No members found with the given search criteria.');
+      }
     } else if (choice == '17') {
       // Exit
+          
 
-      await libraryManager.saveData();
       print('Exiting...');
       break;
     } else {
